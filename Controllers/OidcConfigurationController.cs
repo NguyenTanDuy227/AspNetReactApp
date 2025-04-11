@@ -3,19 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetReactApp.Controllers
 {
-    public class OidcConfigurationController : Controller
+    public class OidcConfigurationController(
+        IClientRequestParametersProvider clientRequestParametersProvider,
+        ILogger<OidcConfigurationController> logger) : Controller
     {
-        private readonly ILogger<OidcConfigurationController> _logger;
+        private readonly ILogger<OidcConfigurationController> _logger = logger;
 
-        public OidcConfigurationController(
-            IClientRequestParametersProvider clientRequestParametersProvider,
-            ILogger<OidcConfigurationController> logger)
-        {
-            ClientRequestParametersProvider = clientRequestParametersProvider;
-            _logger = logger;
-        }
-
-        public IClientRequestParametersProvider ClientRequestParametersProvider { get; }
+        public IClientRequestParametersProvider ClientRequestParametersProvider { get; } = clientRequestParametersProvider;
 
         [HttpGet("_configuration/{clientId}")]
         public IActionResult GetClientRequestParameters([FromRoute] string clientId)

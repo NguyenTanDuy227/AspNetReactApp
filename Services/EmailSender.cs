@@ -4,14 +4,9 @@ using System.Net.Mail;
 
 namespace AspNetReactApp.Services;
 
-public class EmailSender : IEmailSender
+public class EmailSender(ILogger<EmailSender> logger) : IEmailSender
 {
-    private readonly ILogger _logger;
-
-    public EmailSender(ILogger<EmailSender> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger _logger = logger;
 
     private class IdentityMessage
     {
